@@ -3,21 +3,35 @@ const assert = (pred, msg) => {
   if (pred === false) throw Error(msg)
 }
 
+export const prefixToKey = (prefix) => {
+  let key = prefix.trim()
+  // todo: optimize -- use indices instead of slicing
+  while (true) {
+    if (key.startsWith("'")) return key
+    // todo: support other kinds of newlines
+    const nli = key.indexOf('\n')
+    if (nli === -1) break
+    key = key.slice(nli + 1).trimStart()
+  }
+  return key
+}
+
 export const toMap = (jevko) => {
   const {subjevkos, suffix} = jevko
   assert(suffix.trim() === '')
   const ret = Object.create(null)
   for (const {prefix, jevko} of subjevkos) {
-    if (prefix === '') throw Error('oops')
+    let key = prefixToKey(prefix)
+    // skip over commented-out entries
+    if (key.startsWith("-")) continue
 
-    let key
-    //?todo: extract & dedupe w/ inner
-    if (prefix.startsWith("'")) {
+    if (key.startsWith("'")) {
       // note: allow unclosed string literals
-      if (prefix.at(-1) === "'") key = prefix.slice(1, -1)
-      else key = prefix.slice(1)
-    } else key = prefix
+      if (key.at(-1) === "'") key = key.slice(1, -1)
+      else key = key.slice(1)
+    }
 
+    if (key === '') throw Error('oops')
     if (key in ret) throw Error('dupe')
     ret[key] = jevko
   }
