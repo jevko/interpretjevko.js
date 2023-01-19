@@ -17,8 +17,9 @@ export const prefixToKey = (prefix) => {
 }
 
 export const toMap = (jevko) => {
-  const {subjevkos, suffix} = jevko
-  assert(suffix.trim() === '')
+  const {subjevkos, tag, suffix} = jevko
+  // assert(suffix.trim() === '')
+  assert(tag === undefined)
   const ret = Object.create(null)
   for (const {prefix, jevko} of subjevkos) {
     let key = prefixToKey(prefix)
@@ -57,4 +58,20 @@ export const toNumber = (jevko) => {
   if (Number.isNaN(num) === false) return num
 
   throw Error('NaN')
+}
+
+export const toList = (jevko) => {
+  const {subjevkos, tag, suffix} = jevko
+  // assert(suffix.trim() === '')
+  assert(tag === undefined)
+  const ret = []
+  for (const {prefix, jevko} of subjevkos) {
+    let key = prefixToKey(prefix)
+    // skip over commented-out entries
+    if (key.startsWith("-")) continue
+
+    if (key !== '') throw Error('Nonempty key!')
+    ret.push(jevko)
+  }
+  return ret
 }
