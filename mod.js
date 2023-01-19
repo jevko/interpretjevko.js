@@ -31,8 +31,8 @@ export const toMap = (jevko) => {
       else key = key.slice(1)
     }
 
-    if (key === '') throw Error('oops')
-    if (key in ret) throw Error('dupe')
+    if (key === '') throw Error('Empty key!')
+    if (key in ret) throw Error(`Duplicate key '${key}'!`)
     ret[key] = jevko
   }
   return ret
