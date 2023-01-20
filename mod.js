@@ -18,6 +18,7 @@ export const prefixToKey = (prefix) => {
 
 export const toMap = (jevko) => {
   const {subjevkos, tag, suffix} = jevko
+  if (subjevkos.length === 0) return Object.create(null)
   // assert(suffix.trim() === '')
   assert(tag === undefined)
   const ret = Object.create(null)
@@ -62,6 +63,7 @@ export const toNumber = (jevko) => {
 
 export const toList = (jevko) => {
   const {subjevkos, tag, suffix} = jevko
+  if (subjevkos.length === 0) return []
   // assert(suffix.trim() === '')
   assert(tag === undefined)
   const ret = []
@@ -74,4 +76,44 @@ export const toList = (jevko) => {
     ret.push(jevko)
   }
   return ret
+}
+
+export const toBoolean = (jevko) => {
+  const {subjevkos, tag, suffix} = jevko
+
+  assert(subjevkos.length === 0)
+  assert(tag === undefined)
+
+  const trimmed = suffix.trim()
+
+  if (trimmed === 'true') return true
+  if (trimmed === 'false') return false
+  
+  throw Error('oops')
+}
+
+export const toString = (jevko) => {
+  const {subjevkos, tag, suffix} = jevko
+
+  assert(subjevkos.length === 0)
+  assert(tag === undefined)
+
+  const trimmed = suffix.trim()
+
+  if (trimmed.startsWith("'")) {
+    // note: allow unclosed string literals
+    if (trimmed.at(-1) === "'") return trimmed.slice(1, -1)
+    return trimmed.slice(1)
+  }
+
+  return trimmed
+}
+
+export const asJson = (jevko) => {
+  const {subjevkos, tag, suffix} = jevko
+
+  assert(subjevkos.length === 0)
+  assert(tag === 'json')
+
+  return JSON.parse(suffix)
 }
