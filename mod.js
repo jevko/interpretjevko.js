@@ -20,7 +20,7 @@ export const toMap = (jevko) => {
   const {subjevkos, tag, suffix} = jevko
   if (subjevkos.length === 0) return Object.create(null)
   // assert(suffix.trim() === '')
-  assert(tag === undefined)
+  assert(tag === undefined, `Unexpected tag: ${tag}`)
   const ret = Object.create(null)
   for (const {prefix, jevko} of subjevkos) {
     let key = prefixToKey(prefix)
@@ -45,12 +45,12 @@ export const mapAt = (map, key) => map[key]
 export const toNumber = (jevko) => {
   const {subjevkos, tag, suffix} = jevko
 
-  assert(subjevkos.length === 0)
-  assert(tag === undefined)
+  assert(subjevkos.length === 0, `Expected 0 subjevkos, got ${subjevkos.length}`)
+  assert(tag === undefined, `Unexpected tag: ${tag}`)
 
   const trimmed = suffix.trim()
 
-  assert(trimmed !== '')
+  assert(trimmed !== '', `Unexpected blank suffix!`)
 
   if (trimmed === 'NaN') return NaN
 
@@ -65,7 +65,7 @@ export const toList = (jevko) => {
   const {subjevkos, tag, suffix} = jevko
   if (subjevkos.length === 0) return []
   // assert(suffix.trim() === '')
-  assert(tag === undefined)
+  assert(tag === undefined, `Unexpected tag: ${tag}`)
   const ret = []
   for (const {prefix, jevko} of subjevkos) {
     let key = prefixToKey(prefix)
@@ -81,8 +81,8 @@ export const toList = (jevko) => {
 export const toBoolean = (jevko) => {
   const {subjevkos, tag, suffix} = jevko
 
-  assert(subjevkos.length === 0)
-  assert(tag === undefined)
+  assert(subjevkos.length === 0, `Expected 0 subjevkos, got ${subjevkos.length}`)
+  assert(tag === undefined, `Unexpected tag: ${tag}`)
 
   const trimmed = suffix.trim()
 
@@ -95,8 +95,8 @@ export const toBoolean = (jevko) => {
 export const toString = (jevko) => {
   const {subjevkos, tag, suffix} = jevko
 
-  assert(subjevkos.length === 0)
-  assert(tag === undefined)
+  assert(subjevkos.length === 0, `Expected 0 subjevkos, got ${subjevkos.length}`)
+  assert(tag === undefined, `Unexpected tag: ${tag}`)
 
   const trimmed = suffix.trim()
 
@@ -112,8 +112,8 @@ export const toString = (jevko) => {
 export const asJson = (jevko) => {
   const {subjevkos, tag, suffix} = jevko
 
-  assert(subjevkos.length === 0)
-  assert(tag === 'json')
+  assert(subjevkos.length === 0, `Expected 0 subjevkos, got ${subjevkos.length}`)
+  assert(tag === 'json', `Expected tag to be 'json', got '${tag}'`)
 
   return JSON.parse(suffix)
 }
