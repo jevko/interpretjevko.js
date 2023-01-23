@@ -39,7 +39,7 @@ Deno.test('basic', () => {
     ]
   `)
 
-  const parsePhoneNumber = jevko => {
+  const parsePhoneNumber = (jevko) => {
     let _ = mod.toMap(jevko)
     return {
       type: mod.toString(_.type),
@@ -47,14 +47,14 @@ Deno.test('basic', () => {
     }
   }
 
-  const parseSpouse = jevko => {
+  const parseSpouse = (jevko) => {
     if (jevko.subjevkos.length === 0) {
       if (jevko.suffix === 'nil') return null
     }
     throw Error('not implemented')
   }
 
-  const parsePerson = jevko => {
+  const parsePerson = (jevko) => {
     let _ = mod.toMap(jevko)
     let address
     {
