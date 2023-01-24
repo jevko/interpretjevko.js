@@ -89,7 +89,7 @@ export const toBoolean = (jevko) => {
   if (trimmed === 'true') return true
   if (trimmed === 'false') return false
   
-  throw Error('oops')
+  throw Error(`Not a boolean: ${trimmed}`)
 }
 
 export const toString = (jevko) => {
